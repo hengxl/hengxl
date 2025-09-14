@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- TODO: 添加Spring Boot官方父依赖 -->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.5.14</version>
+        <relativePath/>
+    </parent>
+
+    <groupId>com.hxl</groupId>
+    <artifactId>study</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <!-- TODO: 聚合项目 -->
+    <packaging>pom</packaging>
+    <name>study-parent</name>
+    <description>Spring Boot 2.5.14 父项目依赖</description>
+
+    <!-- TODO: 子模块 -->
+    <modules>
+        <module>demo01-package</module>
+        <module>demo02-springJDBC</module>
+    </modules>
+
+    <properties>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- Spring Boot版本 -->
+        <spring-boot.version>2.5.14</spring-boot.version>
+
+        <!-- TODO: 集中管理版本号 -->
+        <lombok.version>1.18.24</lombok.version>
+        <mysql-connector.version>8.0.28</mysql-connector.version>
+        <spring-cloud.version>2020.0.8</spring-cloud.version>
+        <mybatis-plus.vsersion>3.4.3.4</mybatis-plus.vsersion>
+        <junit.version>4.12</junit.version>
+    </properties>
+
+    <!-- TODO: 统一管理依赖 -->
+    <dependencyManagement>
+        <dependencies>
+            <!-- Spring Boot Starters -->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>${spring-boot.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-test</artifactId>
+                <version>${spring-boot.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- 工具类 -->
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+
+            <!-- MyBatis-Plus 核心依赖（与Spring Boot 2.5.x兼容的稳定版本） -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus.vsersion}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>${junit.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- 数据库驱动（以MySQL为例，根据实际数据库选择） -->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql.version}</version> <!-- 兼容Java 8及MySQL 5.7/8.0 -->
+                <scope>runtime</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <!-- TODO: 插件管理（统一构建插件版本） -->
+    <build>
+        <pluginManagement>
+            <plugins>
+                <!-- Spring Boot Maven插件 -->
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring-boot.version}</version>
+                    <configuration>
+                        <excludes>
+                            <exclude>
+                                <groupId>org.projectlombok</groupId>
+                                <artifactId>lombok</artifactId>
+                            </exclude>
+                        </excludes>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+</project>

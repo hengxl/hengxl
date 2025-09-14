@@ -1,0 +1,64 @@
+server:
+  port: 80
+
+spring:
+  profiles:
+    active: dev
+
+# MyBatis-Plus 核心配置（必须）
+mybatis-plus:
+  # Mapper.xml映射文件路径（默认扫描classpath下的mapper目录）
+  mapper-locations: classpath:mapper/*.xml
+  # 实体类包路径（用于别名映射，简化XML中的类名）
+  type-aliases-package: com.hxl.domain
+  # 全局配置
+  global-config:
+    db-config:
+      # 主键类型：AUTO(自增)、INPUT(手动输入)、ASSIGN_ID(雪花算法)等
+      id-type: AUTO
+      # 表名前缀（如果你的表都有统一前缀，比如t_，可以配置这里）
+      # table-prefix: t_
+  # 配置项
+  configuration:
+    # 开启下划线转驼峰（数据库字段user_name -> 实体类属性userName）
+    map-underscore-to-camel-case: true
+    # 日志输出（开发环境建议开启，生产环境关闭）
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+logging:
+  # 日志格式：基础信息
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss,SSS} [%thread] %-5level %c{8}:%L - %m%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss,SSS} [%thread] %-5level %c{8}:%L - %m%n"
+
+  # 日志文件配置
+  file:
+    name: ./demo01-package/log/app.log
+
+  logback:
+    rollingpolicy:
+      file-name-pattern: ./demo01-package/log/%d{yyyy-MM-dd}/app_%d{yyyy-MM-dd}_%i.log.gz
+      max-file-size: 50MB
+      max-history: 30
+      clean-history-on-start: false
+
+  # 控制日志级别，仅让“启动端口日志”显示
+  level:
+    root: INFO  # 根日志级别
+
+    # 1. 让 Web 服务器（如 Tomcat/Undertow）的启动日志显示（打印端口）
+    # 用 Tomcat（默认），配置这个：
+    org.springframework.boot.web.embedded.tomcat.TomcatWebServer: INFO
+
+    # 2. 其他框架日志仍设为 WARN，减少冗余（避免干扰）
+    org.springframework: WARN  # 除了上面的 WebServer 类，其他 Spring 日志还是 WARN
+    io.undertow: WARN
+    com.zaxxer.hikari: WARN
+    org.mybatis: WARN
+    org.hibernate.validator: WARN
+    com.baomidou.mybatisplus: WARN
+    springfox.documentation.swagger: ERROR
+
+    # 3. 请求日志按需求配置
+    com.example.aop.WebLogAspect: DEBUG
+    com.example.controller: INFO

@@ -1,0 +1,11 @@
+# 数据库连接配置（必须）
+spring:
+  datasource:
+    # 数据库URL（MySQL为例，替换为你的库名和地址）
+    url: jdbc:mysql://localhost:3306/my_db?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false
+    # 数据库用户名
+    username: root
+    # 数据库密码
+    password: root
+    # 驱动类（MySQL 8.x）
+    driver-class-name: com.mysql.cj.jdbc.Driver
